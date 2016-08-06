@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("enBask.ASF.Tablestorage.Shared")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Service Fabric implementation for a document table storage system")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("enBask Studios")]
 [assembly: AssemblyProduct("enBask.ASF.Tablestorage.Shared")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCopyright("Copyright © 2016 enBask Studios")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

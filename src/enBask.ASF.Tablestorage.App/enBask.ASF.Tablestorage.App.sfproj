@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\..\packages\Microsoft.VisualStudio.Azure.Fabric.MSBuild.1.1.0\build\Microsoft.VisualStudio.Azure.Fabric.Application.props" Condition="Exists('..\..\..\packages\Microsoft.VisualStudio.Azure.Fabric.MSBuild.1.1.0\build\Microsoft.VisualStudio.Azure.Fabric.Application.props')" />
+  <Import Project="..\packages\Microsoft.VisualStudio.Azure.Fabric.MSBuild.1.1.0\build\Microsoft.VisualStudio.Azure.Fabric.Application.props" Condition="Exists('..\packages\Microsoft.VisualStudio.Azure.Fabric.MSBuild.1.1.0\build\Microsoft.VisualStudio.Azure.Fabric.Application.props')" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>a2b3dbee-0905-4218-9570-4d05c6ad4301</ProjectGuid>
+    <ProjectGuid>3b501745-5eb0-4ddc-9f06-9043fa22a961</ProjectGuid>
     <ProjectVersion>1.1</ProjectVersion>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
@@ -17,14 +17,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ApplicationPackageRoot\ApplicationManifest.xml" />
-    <None Include="ApplicationParameters\Cloud.xml" />
-    <None Include="ApplicationParameters\Local.xml" />
-    <None Include="PublishProfiles\Cloud.xml" />
-    <None Include="PublishProfiles\Local.xml" />
     <None Include="Scripts\Deploy-FabricApplication.ps1" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ApplicationParameters\Local.xml" />
     <Content Include="packages.config" />
+    <Content Include="PublishProfiles\Local.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\enBask.ASF.Tablestorage.Service\enBask.ASF.Tablestorage.Service.csproj" />
@@ -34,5 +32,5 @@
     <ApplicationProjectTargetsPath>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Service Fabric Tools\Microsoft.VisualStudio.Azure.Fabric.ApplicationProject.targets</ApplicationProjectTargetsPath>
   </PropertyGroup>
   <Import Project="$(ApplicationProjectTargetsPath)" Condition="Exists('$(ApplicationProjectTargetsPath)')" />
-  <Import Project="..\..\..\packages\Microsoft.VisualStudio.Azure.Fabric.MSBuild.1.1.0\build\Microsoft.VisualStudio.Azure.Fabric.Application.targets" Condition="Exists('..\..\..\packages\Microsoft.VisualStudio.Azure.Fabric.MSBuild.1.1.0\build\Microsoft.VisualStudio.Azure.Fabric.Application.targets')" />
+  <Import Project="..\packages\Microsoft.VisualStudio.Azure.Fabric.MSBuild.1.1.0\build\Microsoft.VisualStudio.Azure.Fabric.Application.targets" Condition="Exists('..\packages\Microsoft.VisualStudio.Azure.Fabric.MSBuild.1.1.0\build\Microsoft.VisualStudio.Azure.Fabric.Application.targets')" />
 </Project>
