@@ -136,17 +136,29 @@ namespace enBask.ASF.Tablestorage.Service
                 using (var tx = StateManager.CreateTransaction())
                 {
                     var table = await GetTable(tx, lookup);
-                    var r = await table.TryRemoveAsync(tx, lookup.id);
+                    var r = await table.TryGetValueAsync(tx, lookup.id);
                     if (r.HasValue)
                     {
-                        //check if we can remove the entire collection.
-                        var count = await table.GetCountAsync(tx);
-                        if (count == 0)
+                        var currentEntity = JsonConvert.DeserializeObject<JObject>(r.Value);
+                        //validate ETag
+                        var oldTag = currentEntity["etag"].Value<string>();
+                        var newTag = entity["etag"].Value<string>();
+
+                        if (newTag == "*" || newTag == oldTag)
                         {
-                            await StateManager.RemoveAsync(tx, lookup.partition);
+                            r = await table.TryRemoveAsync(tx, lookup.id);
+                            if (r.HasValue)
+                            {
+                                //check if we can remove the entire collection.
+                                var count = await table.GetCountAsync(tx);
+                                if (count == 0)
+                                {
+                                    await StateManager.RemoveAsync(tx, lookup.partition);
+                                }
+                                await tx.CommitAsync();
+                                response.Code = StorageResponseCodes.Success;
+                            }
                         }
-                        await tx.CommitAsync();
-                        response.Code = StorageResponseCodes.Success;
                     }
                 }
             }
@@ -206,8 +218,16 @@ namespace enBask.ASF.Tablestorage.Service
                 using (var tx = StateManager.CreateTransaction())
                 {
                     var table = await GetTable(tx, lookup);
-                    bool updated = false;
-                    await table.AddOrUpdateAsync(tx, lookup.id, document,
+                    bool updated = true; //switch bit so that an add will flag success. updates only fail for a bad etag now.
+                    await table.AddOrUpdateAsync(tx, lookup.id,
+                    (val)=>
+                    {
+                        //was missing tag/stamp updates when it was an add request.
+                        entity["etag"] = Guid.NewGuid().ToString();
+                        entity["timestamp"] = DateTime.UtcNow;
+                        document = JsonConvert.SerializeObject(entity);
+                        return document;
+                    },
                     (id, oldValue)=>
                     {
                         var oldEntity = JsonConvert.DeserializeObject<JObject>(oldValue);
@@ -220,11 +240,11 @@ namespace enBask.ASF.Tablestorage.Service
                             entity["etag"] = Guid.NewGuid().ToString();
                             entity["timestamp"] = DateTime.UtcNow;
                             document = JsonConvert.SerializeObject(entity);
-                            updated = true;
                             return document;
                         }
                         else
                         {
+                            updated = false;
                             return oldTag;
                         }
                     });
