@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <DebugSymbols>true</DebugSymbols>
@@ -88,6 +90,7 @@
     <Compile Include="ServiceEventSource.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Package.nuspec" />
     <None Include="PackageRoot\Config\Settings.xml" />
     <None Include="PackageRoot\ServiceManifest.xml" />
     <None Include="App.config" />
@@ -98,6 +101,12 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="tools\init.ps1" />
+    <None Include="tools\install.ps1" />
+    <None Include="tools\NuGet.config" />
+    <None Include="tools\NuGetPackage.ps1" />
+    <None Include="tools\NuGetSetup.ps1" />
+    <None Include="tools\uninstall.ps1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\enBask.ASF.Tablestorage.Shared\enBask.ASF.Tablestorage.Shared.csproj">
@@ -105,7 +114,20 @@
       <Name>enBask.ASF.Tablestorage.Shared</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="tools\NuGet.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="content\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\SFNuGet.0.3.30\build\SFNuGet.targets" Condition="Exists('..\packages\SFNuGet.0.3.30\build\SFNuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\SFNuGet.0.3.30\build\SFNuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SFNuGet.0.3.30\build\SFNuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
