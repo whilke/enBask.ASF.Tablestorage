@@ -2,16 +2,16 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>enBask.ASF.Tablestorage</id>
-    <version>1.0.0.0</version>
+    <version>1.0.2.0</version>
     <authors>Bill Hilke</authors>
     <description>Service Fabric implementation for a document table storage system</description>
     <language>en-US</language>
     <projectUrl>https://github.com/whilke/enBask.ASF.Tablestorage</projectUrl>
     <licenseUrl>https://github.com/whilke/enBask.ASF.Tablestorage/blob/master/LICENSE</licenseUrl>
     <dependencies>
-      <dependency id="Microsoft.ServiceFabric" version="5.1.163" />
-      <dependency id="Microsoft.ServiceFabric.Data" version="2.1.163"  />
-      <dependency id="Microsoft.ServiceFabric.Services" version="2.1.163" />
+      <dependency id="Microsoft.ServiceFabric" version="5.4.164" />
+      <dependency id="Microsoft.ServiceFabric.Data" version="2.4.164"  />
+      <dependency id="Microsoft.ServiceFabric.Services" version="2.4.164" />
       <dependency id="Newtonsoft.Json" version="9.0.1" />
     </dependencies>
   </metadata>
