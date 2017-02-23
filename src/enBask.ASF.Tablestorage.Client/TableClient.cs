@@ -73,7 +73,7 @@ namespace enBask.ASF.Tablestorage.Client
             var services = await client.QueryManager.GetServiceListAsync(app_uri, table_uri);
             foreach (var service in services)
             {
-                await client.ServiceManager.DeleteServiceAsync(service.ServiceName);
+                await client.ServiceManager.DeleteServiceAsync(new DeleteServiceDescription(service.ServiceName));
             }
         }
 
