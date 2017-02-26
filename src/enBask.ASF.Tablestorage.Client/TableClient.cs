@@ -15,10 +15,11 @@ namespace enBask.ASF.Tablestorage.Client
 {
     public class TableClient
     {
-        const string service_uri = "fabric:/enBask.ASF.Tablestorage.App/TableService-{0}";
-        private Uri app_uri = new Uri("fabric:/enBask.ASF.Tablestorage.App");
+        const string service_uri = "fabric:/{0}/TableService-{1}";
+        private Uri app_uri;
         private Uri table_uri;
 
+        private string _appName;
         private string _tableName;
         private int partitionCount;
 
@@ -38,12 +39,14 @@ namespace enBask.ASF.Tablestorage.Client
             return (long)hash;
         }
 
-        public TableClient(string tableName, int instanceCount)
+        public TableClient(string appName, string tableName, int instanceCount)
         {
+            _appName = appName;
             _tableName = tableName;
             partitionCount = instanceCount;
 
-            table_uri = new Uri(string.Format(service_uri, _tableName));
+            app_uri = new Uri(string.Format("fabric:/{0}", _appName));
+            table_uri = new Uri(string.Format(service_uri, _appName, _tableName));
         }
         public async Task CreateIfNotExsistAsync()
         {
